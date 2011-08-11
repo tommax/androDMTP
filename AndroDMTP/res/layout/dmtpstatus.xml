@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+  xmlns:android="http://schemas.android.com/apk/res/android"
+  android:orientation="vertical"
+  android:layout_width="fill_parent"
+  android:layout_height="fill_parent">
+    <LinearLayout android:layout_width="fill_parent" android:id="@+id/linearLayout1" android:layout_height="wrap_content">
+        <Button android:layout_height="wrap_content" android:id="@+id/startDMTP" android:text="Start" android:layout_width="wrap_content"></Button>
+        <Button android:layout_height="wrap_content" android:id="@+id/pauseDMTP" android:text="Pause" android:layout_width="wrap_content"></Button>
+    </LinearLayout>
+    <RelativeLayout android:layout_width="fill_parent" android:layout_height="wrap_content" android:id="@+id/relativeLayout1">
+        <ImageView android:id="@+id/statusIconRed" android:src="@drawable/redlight" android:layout_width="wrap_content" android:layout_height="wrap_content"></ImageView>
+        <ImageView android:id="@+id/statusIconGreen" android:layout_height="wrap_content" android:src="@drawable/greenlight" android:layout_width="wrap_content" android:layout_alignParentTop="true" android:layout_alignParentLeft="true"></ImageView>
+        <ImageView android:layout_height="wrap_content" android:src="@drawable/yellowlight" android:layout_width="wrap_content" android:layout_alignParentTop="true" android:layout_alignParentLeft="true" android:id="@+id/statusImageYellow"></ImageView>
+    </RelativeLayout>
+</LinearLayout>
