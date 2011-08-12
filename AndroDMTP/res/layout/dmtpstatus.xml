@@ -22,32 +22,32 @@
         <Button android:text="Start" android:layout_width="wrap_content" android:id="@+id/startDMTP" android:layout_height="fill_parent" android:width="100px"></Button>
         <Button android:text="Pause" android:layout_width="wrap_content" android:id="@+id/pauseDMTP" android:layout_height="fill_parent" android:width="160px"></Button>
     </LinearLayout>
-    <LinearLayout android:layout_width="fill_parent" android:id="@+id/linearLayout2" android:layout_height="wrap_content" android:layout_marginTop="20px">
+    <LinearLayout android:layout_width="fill_parent" android:id="@+id/linearLayout2" android:layout_height="wrap_content" android:layout_marginTop="15px">
         <TextView android:id="@+id/textView3" android:textAppearance="?android:attr/textAppearanceMedium" android:layout_width="wrap_content" android:text="Last Valid FIX" android:layout_height="fill_parent" android:gravity="center_vertical"></TextView>
         <TextView android:textAppearance="?android:attr/textAppearanceMedium" android:layout_width="188dp" android:layout_height="fill_parent" android:layout_gravity="center_vertical" android:layout_marginLeft="20px" android:id="@+id/lastfixdate" android:text="@string/nodata"></TextView>
     </LinearLayout>
-    <LinearLayout android:layout_width="fill_parent" android:id="@+id/linearLayout3" android:layout_height="wrap_content" android:orientation="vertical" android:layout_marginTop="20px">
+    <LinearLayout android:layout_width="fill_parent" android:id="@+id/linearLayout3" android:layout_height="wrap_content" android:orientation="vertical" android:layout_marginTop="15px">
         <TextView android:id="@+id/textView4" android:textAppearance="?android:attr/textAppearanceMedium" android:layout_height="wrap_content" android:layout_width="fill_parent" android:gravity="center_vertical|center_horizontal" android:text="Last GPS data"></TextView>
         <TableLayout android:id="@+id/tableLayout1" android:layout_width="fill_parent" android:layout_height="wrap_content" android:layout_marginTop="10px">
             <TableRow android:id="@+id/tableRow1" android:layout_width="wrap_content" android:layout_height="wrap_content">
-                <TextView android:id="@+id/textView5" android:layout_height="wrap_content" android:textAppearance="?android:attr/textAppearanceMedium" android:layout_width="wrap_content" android:text="Latitude"></TextView>
-                <TextView android:layout_height="wrap_content" android:textAppearance="?android:attr/textAppearanceMedium" android:layout_width="wrap_content" android:id="@+id/latitude" android:text="@string/nodata" android:layout_marginLeft="20px"></TextView>
+                <TextView android:id="@+id/textView5" android:layout_height="wrap_content" android:layout_width="wrap_content" android:text="Latitude" android:textAppearance="?android:attr/textAppearanceSmall"></TextView>
+                <TextView android:layout_height="wrap_content" android:layout_width="wrap_content" android:id="@+id/latitude" android:text="@string/nodata" android:layout_marginLeft="20px" android:textAppearance="?android:attr/textAppearanceSmall"></TextView>
             </TableRow>
             <TableRow android:id="@+id/tableRow2" android:layout_width="wrap_content" android:layout_height="wrap_content">
-                <TextView android:id="@+id/textView7" android:layout_height="wrap_content" android:textAppearance="?android:attr/textAppearanceMedium" android:layout_width="wrap_content" android:text="Longitude"></TextView>
-                <TextView android:layout_height="wrap_content" android:textAppearance="?android:attr/textAppearanceMedium" android:layout_width="wrap_content" android:id="@+id/longitude" android:text="@string/nodata" android:layout_marginLeft="20px"></TextView>
+                <TextView android:id="@+id/textView7" android:layout_height="wrap_content" android:layout_width="wrap_content" android:text="Longitude" android:textAppearance="?android:attr/textAppearanceSmall"></TextView>
+                <TextView android:layout_height="wrap_content" android:layout_width="wrap_content" android:id="@+id/longitude" android:text="@string/nodata" android:layout_marginLeft="20px" android:textAppearance="?android:attr/textAppearanceSmall"></TextView>
             </TableRow>
             <TableRow android:id="@+id/tableRow3" android:layout_width="wrap_content" android:layout_height="wrap_content">
-                <TextView android:id="@+id/textView8" android:layout_height="wrap_content" android:textAppearance="?android:attr/textAppearanceMedium" android:layout_width="wrap_content" android:text="Altitude"></TextView>
-                <TextView android:layout_height="wrap_content" android:textAppearance="?android:attr/textAppearanceMedium" android:layout_width="wrap_content" android:id="@+id/altitude" android:text="@string/nodata" android:layout_marginLeft="20px"></TextView>
+                <TextView android:id="@+id/textView8" android:layout_height="wrap_content" android:layout_width="wrap_content" android:text="Altitude" android:textAppearance="?android:attr/textAppearanceSmall"></TextView>
+                <TextView android:layout_height="wrap_content" android:layout_width="wrap_content" android:id="@+id/altitude" android:text="@string/nodata" android:layout_marginLeft="20px" android:textAppearance="?android:attr/textAppearanceSmall"></TextView>
             </TableRow>
             <TableRow android:id="@+id/tableRow4" android:layout_width="wrap_content" android:layout_height="wrap_content">
-                <TextView android:id="@+id/textView9" android:layout_height="wrap_content" android:textAppearance="?android:attr/textAppearanceMedium" android:layout_width="wrap_content" android:text="Accuracy"></TextView>
-                <TextView android:layout_height="wrap_content" android:textAppearance="?android:attr/textAppearanceMedium" android:layout_width="wrap_content" android:id="@+id/accuracy" android:text="@string/nodata" android:layout_marginLeft="20px"></TextView>
+                <TextView android:id="@+id/textView9" android:layout_height="wrap_content" android:layout_width="wrap_content" android:text="Accuracy" android:textAppearance="?android:attr/textAppearanceSmall"></TextView>
+                <TextView android:layout_height="wrap_content" android:layout_width="wrap_content" android:id="@+id/accuracy" android:text="@string/nodata" android:layout_marginLeft="20px" android:textAppearance="?android:attr/textAppearanceSmall"></TextView>
             </TableRow>
             <TableRow android:id="@+id/tableRow5" android:layout_height="wrap_content" android:layout_width="fill_parent">
-                <TextView android:id="@+id/textView10" android:layout_height="wrap_content" android:textAppearance="?android:attr/textAppearanceMedium" android:layout_width="wrap_content" android:text="Speed"></TextView>
-                <TextView android:layout_height="wrap_content" android:textAppearance="?android:attr/textAppearanceMedium" android:layout_width="wrap_content" android:id="@+id/speed" android:text="@string/nodata" android:layout_marginLeft="20px"></TextView>
+                <TextView android:id="@+id/textView10" android:layout_height="wrap_content" android:layout_width="wrap_content" android:text="Speed" android:textAppearance="?android:attr/textAppearanceSmall"></TextView>
+                <TextView android:layout_height="wrap_content" android:layout_width="wrap_content" android:id="@+id/speed" android:text="@string/nodata" android:layout_marginLeft="20px" android:textAppearance="?android:attr/textAppearanceSmall"></TextView>
             </TableRow>
         </TableLayout>
     </LinearLayout>
@@ -55,24 +55,24 @@
         <TextView android:id="@+id/TextView06" android:gravity="center_vertical|center_horizontal" android:textAppearance="?android:attr/textAppearanceMedium" android:layout_width="fill_parent" android:layout_height="wrap_content" android:text="GPS Status"></TextView>
         <TableLayout android:layout_marginTop="10px" android:id="@+id/TableLayout01" android:layout_width="fill_parent" android:layout_height="wrap_content">
             <TableRow android:id="@+id/TableRow03" android:layout_height="wrap_content" android:layout_width="wrap_content">
-                <TextView android:layout_height="wrap_content" android:text="Latitude" android:textAppearance="?android:attr/textAppearanceMedium" android:layout_width="wrap_content" android:id="@+id/strLatitudeNow"></TextView>
-                <TextView android:layout_height="wrap_content" android:layout_marginLeft="20px" android:text="@string/nodata" android:textAppearance="?android:attr/textAppearanceMedium" android:layout_width="wrap_content" android:id="@+id/latitudeNow"></TextView>
+                <TextView android:layout_height="wrap_content" android:text="Latitude" android:layout_width="wrap_content" android:id="@+id/strLatitudeNow" android:textAppearance="?android:attr/textAppearanceSmall"></TextView>
+                <TextView android:layout_height="wrap_content" android:layout_marginLeft="20px" android:text="@string/nodata" android:layout_width="wrap_content" android:id="@+id/latitudeNow" android:textAppearance="?android:attr/textAppearanceSmall"></TextView>
             </TableRow>
             <TableRow android:id="@+id/TableRow02" android:layout_height="wrap_content" android:layout_width="wrap_content">
-                <TextView android:layout_height="wrap_content" android:text="Longitude" android:textAppearance="?android:attr/textAppearanceMedium" android:layout_width="wrap_content" android:id="@+id/atrLongitudeNow"></TextView>
-                <TextView android:layout_height="wrap_content" android:layout_marginLeft="20px" android:text="@string/nodata" android:textAppearance="?android:attr/textAppearanceMedium" android:layout_width="wrap_content" android:id="@+id/longitudeNow"></TextView>
+                <TextView android:layout_height="wrap_content" android:text="Longitude" android:layout_width="wrap_content" android:id="@+id/atrLongitudeNow" android:textAppearance="?android:attr/textAppearanceSmall"></TextView>
+                <TextView android:layout_height="wrap_content" android:layout_marginLeft="20px" android:text="@string/nodata" android:layout_width="wrap_content" android:id="@+id/longitudeNow" android:textAppearance="?android:attr/textAppearanceSmall"></TextView>
             </TableRow>
             <TableRow android:id="@+id/TableRow05" android:layout_height="wrap_content" android:layout_width="wrap_content">
-                <TextView android:layout_height="wrap_content" android:text="Altitude" android:textAppearance="?android:attr/textAppearanceMedium" android:layout_width="wrap_content" android:id="@+id/strAltitudeNow"></TextView>
-                <TextView android:layout_height="wrap_content" android:layout_marginLeft="20px" android:text="@string/nodata" android:textAppearance="?android:attr/textAppearanceMedium" android:layout_width="wrap_content" android:id="@+id/altitudeNow"></TextView>
+                <TextView android:layout_height="wrap_content" android:text="Altitude" android:layout_width="wrap_content" android:id="@+id/strAltitudeNow" android:textAppearance="?android:attr/textAppearanceSmall"></TextView>
+                <TextView android:layout_height="wrap_content" android:layout_marginLeft="20px" android:text="@string/nodata" android:layout_width="wrap_content" android:id="@+id/altitudeNow" android:textAppearance="?android:attr/textAppearanceSmall"></TextView>
             </TableRow>
             <TableRow android:id="@+id/TableRow04" android:layout_height="wrap_content" android:layout_width="wrap_content">
-                <TextView android:layout_height="wrap_content" android:text="Accuracy" android:textAppearance="?android:attr/textAppearanceMedium" android:layout_width="wrap_content" android:id="@+id/strAccuracyNow"></TextView>
-                <TextView android:layout_height="wrap_content" android:layout_marginLeft="20px" android:text="@string/nodata" android:textAppearance="?android:attr/textAppearanceMedium" android:layout_width="wrap_content" android:id="@+id/accuracyNow"></TextView>
+                <TextView android:layout_height="wrap_content" android:text="Accuracy" android:layout_width="wrap_content" android:id="@+id/strAccuracyNow" android:textAppearance="?android:attr/textAppearanceSmall"></TextView>
+                <TextView android:layout_height="wrap_content" android:layout_marginLeft="20px" android:text="@string/nodata" android:layout_width="wrap_content" android:id="@+id/accuracyNow" android:textAppearance="?android:attr/textAppearanceSmall"></TextView>
             </TableRow>
             <TableRow android:id="@+id/TableRow01" android:layout_height="wrap_content" android:layout_width="fill_parent">
-                <TextView android:layout_height="wrap_content" android:text="Speed" android:textAppearance="?android:attr/textAppearanceMedium" android:layout_width="wrap_content" android:id="@+id/strSpeedNow"></TextView>
-                <TextView android:layout_height="wrap_content" android:layout_marginLeft="20px" android:text="@string/nodata" android:textAppearance="?android:attr/textAppearanceMedium" android:layout_width="wrap_content" android:id="@+id/speedNow"></TextView>
+                <TextView android:layout_height="wrap_content" android:text="Speed" android:layout_width="wrap_content" android:id="@+id/strSpeedNow" android:textAppearance="?android:attr/textAppearanceSmall"></TextView>
+                <TextView android:layout_height="wrap_content" android:layout_marginLeft="20px" android:text="@string/nodata" android:layout_width="wrap_content" android:id="@+id/speedNow" android:textAppearance="?android:attr/textAppearanceSmall"></TextView>
             </TableRow>
         </TableLayout>
     </LinearLayout>

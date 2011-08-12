@@ -30,16 +30,16 @@ public class ConfigurationApp extends TabActivity {
 		intent = new Intent().setClass(this, GPSSettings.class);
 		
 		// Initialize a TabSpec for each tab and add it to the TabHost
-		spec = tabHost.newTabSpec("gps").setIndicator("GPS Settings", res.getDrawable(R.drawable.ic_tab_gps)).setContent(intent);
+		spec = tabHost.newTabSpec("gps").setIndicator("GPS", res.getDrawable(R.drawable.ic_tab_gps)).setContent(intent);
 		tabHost.addTab(spec);
 		
 		// Do the same for the other tabs
 		intent = new Intent().setClass(this, ServerSettings.class);
-		spec = tabHost.newTabSpec("server").setIndicator("Server Settings", res.getDrawable(R.drawable.ic_tab_server)).setContent(intent);
+		spec = tabHost.newTabSpec("server").setIndicator("SERVER", res.getDrawable(R.drawable.ic_tab_server)).setContent(intent);
 		tabHost.addTab(spec);
 
 		intent = new Intent().setClass(this, ComunicationSettings.class);
-		spec = tabHost.newTabSpec("communication").setIndicator("Communication Settings", res.getDrawable(R.drawable.ic_tab_com)).setContent(intent);
+		spec = tabHost.newTabSpec("communication").setIndicator("COM", res.getDrawable(R.drawable.ic_tab_com)).setContent(intent);
 		tabHost.addTab(spec);
 		
 		tabHost.setCurrentTab(0);
