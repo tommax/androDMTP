@@ -33,8 +33,8 @@
 // ----------------------------------------------------------------------------
 package com.tommasocodella.androdmtp.opendmtp.client.base;
 
+import com.tommasocodella.androdmtp.gps.GPSUtils;
 import com.tommasocodella.androdmtp.opendmtp.client.custom.Constants;
-import com.tommasocodella.androdmtp.opendmtp.client.gps.GPSUtils;
 import com.tommasocodella.androdmtp.opendmtp.codes.ClientErrors;
 import com.tommasocodella.androdmtp.opendmtp.codes.Encoding;
 import com.tommasocodella.androdmtp.opendmtp.codes.ServerErrors;
@@ -297,7 +297,7 @@ public class Protocol
         /* check specific event priority */
         int xportType = TRANSPORT_NONE;
         int evPri = this.getEventQueue().getHighestPriority();
-        //Log.info(LOG_NAME, "Highest event priority: " + evPri);
+        Log.info(LOG_NAME, "\tHighest event priority: " + evPri + " in an empty queue? " + this.getEventQueue().isEmpty());
         switch (evPri) {
     
             // no events, time for 'checkup'?

@@ -21,6 +21,8 @@ public class AndroDMTPLocationListener implements LocationListener {
 
 
 	public void onLocationChanged(Location location) {
+		GPSUtils.setLastSampleTime(location.getTime());
+		
 		if (currentBestLocation == null) {
 			currentBestLocation = location;
 			isNewLocation = true;
@@ -62,6 +64,7 @@ public class AndroDMTPLocationListener implements LocationListener {
 			isNewLocation = true;
 		}
 		
+		GPSUtils.setLastValidTime(currentBestLocation.getTime());
 	}
 	
 	public boolean isLocationPresent(){

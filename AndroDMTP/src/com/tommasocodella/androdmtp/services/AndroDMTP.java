@@ -1,13 +1,13 @@
 package com.tommasocodella.androdmtp.services;
 
 import com.tommasocodella.androdmtp.gps.AndroDMTPLocationListener;
+import com.tommasocodella.androdmtp.gps.GPSUtils;
 import com.tommasocodella.androdmtp.opendmtp.client.base.GPSModules;
 import com.tommasocodella.androdmtp.opendmtp.client.base.Packet;
 import com.tommasocodella.androdmtp.opendmtp.client.base.PacketQueue;
 import com.tommasocodella.androdmtp.opendmtp.client.base.PersistentStorage;
 import com.tommasocodella.androdmtp.opendmtp.client.base.Props;
 import com.tommasocodella.androdmtp.opendmtp.client.base.Protocol;
-import com.tommasocodella.androdmtp.opendmtp.client.gps.GPSUtils;
 import com.tommasocodella.androdmtp.opendmtp.client.modules.MotionModule;
 import com.tommasocodella.androdmtp.opendmtp.client.modules.OdometerModule;
 import com.tommasocodella.androdmtp.opendmtp.codes.StatusCodes;
@@ -318,7 +318,7 @@ public class AndroDMTP implements Runnable, Props.SavePropsCallBack{
 
     //	Saves all properties into storage.
     public void saveProps(){
-        Props.saveToStore(this.propsStore, false);
+        //Props.saveToStore(this.propsStore, false);
     }
     
     //	Force an event to be sent as soon as possible
@@ -401,42 +401,42 @@ public class AndroDMTP implements Runnable, Props.SavePropsCallBack{
         }
         
         //	New valid fix?
-        boolean validGPS = false;
+        boolean validGPS = false;        
+        
         if ((gps != null) && gps.isValid() && (this.lastValidGPSFix.getTimestamp() != gps.getTimestamp())) {
-            // A new valid GPS fix is recived
-            // NOTES: 
-            // - PROP_GPS_ACCURACY is already taken into account
-            // - It may be desirable to set the current system time to this GPS time.
-            double minSpeedKPH = Props.getDouble(Props.PROP_GPS_MIN_SPEED, 0, 7.0);
-            gps.checkMinimumSpeed(minSpeedKPH);
-            if (ENABLE_EVENTS) {
-                //	Run through standard gps monitors (first)
-                this.gpsModules.checkGPS(this.lastValidGPSFix, gps);
-                //	Send INITIALIZED event
-                if (!sentInitializedEvent) {
-                    gps.setStatusCode(StatusCodes.STATUS_INITIALIZED);
-                    this.protocol.getEventQueue().addEvent(Packet.PRIORITY_NORMAL, gps);
-                    sentInitializedEvent = true;
-                }
-                //	Send 'ping' event
-                if (this.pendingPing != StatusCodes.STATUS_NONE) {
-                    gps.setStatusCode(this.pendingPing);
-                    this.protocol.getEventQueue().addEvent(Packet.PRIORITY_NORMAL, gps);
-                    this.pendingPing = StatusCodes.STATUS_NONE;
-                }
-            }
-            //	Save last valid gps fix
-            gps.copyTo(this.lastValidGPSFix);
-            if(GPSUtils.isGpsStale()) {
-                //	GPS was stale, but is no longer stale
-                Log.debug(LOG_NAME, "GPS fix is now up to date");
-                GPSUtils.setGpsStale(false);
-                this.gpsStaleTimer = 0L;
-            } else {
-                // still not stale 
-            }
-            validGPS = true;
-        }
+        	// A new valid GPS fix is recived
+        	// NOTES: 
+			// - It may be desirable to set the current system time to this GPS time.
+			double minSpeedKPH = Props.getDouble(Props.PROP_GPS_MIN_SPEED, 0, 7.0);
+			gps.checkMinimumSpeed(minSpeedKPH);
+			if (ENABLE_EVENTS) {
+				//	Run through standard gps monitors (first)
+				this.gpsModules.checkGPS(this.lastValidGPSFix, gps);
+				//	Send INITIALIZED event
+				if (!sentInitializedEvent) {
+					gps.setStatusCode(StatusCodes.STATUS_INITIALIZED);
+					this.protocol.getEventQueue().addEvent(Packet.PRIORITY_NORMAL, gps);
+					sentInitializedEvent = true;
+				}
+				//	Send 'ping' event
+				if (this.pendingPing != StatusCodes.STATUS_NONE) {
+					gps.setStatusCode(this.pendingPing);
+					this.protocol.getEventQueue().addEvent(Packet.PRIORITY_NORMAL, gps);
+					this.pendingPing = StatusCodes.STATUS_NONE;
+				}
+			}
+			//	Save last valid gps fix
+			gps.copyTo(this.lastValidGPSFix);
+			if(GPSUtils.isGpsStale()) {
+				//	GPS was stale, but is no longer stale
+				Log.debug(LOG_NAME, "GPS fix is now up to date");
+				GPSUtils.setGpsStale(false);
+				this.gpsStaleTimer = 0L;
+			} else {
+				// still not stale 
+			}
+			validGPS = true;
+		}
         
         if(!GPSUtils.isGpsStale()){
         	// We've not received a valid GPS fix, however the last GPS fix (if any)

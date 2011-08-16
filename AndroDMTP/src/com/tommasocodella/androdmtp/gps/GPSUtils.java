@@ -1,4 +1,4 @@
-package com.tommasocodella.androdmtp.opendmtp.client.gps;
+package com.tommasocodella.androdmtp.gps;
 
 import com.tommasocodella.androdmtp.opendmtp.util.Log;
 

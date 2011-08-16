@@ -306,7 +306,7 @@ public class TransportImpl
         /* get host:port */
         this.host = Props.getString(Props.PROP_COMM_DMTP_HOST, "");
         this.port = (int)Props.getLong(Props.PROP_COMM_DMTP_PORT, 0, 0L);
-        Log.error(LOG_NAME, "Connecting to: " + this.host + ":" + this.port);
+        Log.info(LOG_NAME, "Connecting to: " + this.host + ":" + this.port);
         if ((this.host == null) || this.host.equals("") || (this.port <= 0)) {
             Log.warn(LOG_NAME, "TransportImpl.open: host/port not specified ...");
             // If we don't have a valid host:port, this problem will likely not be fixed 

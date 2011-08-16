@@ -11,6 +11,9 @@ import android.os.IBinder;
 import android.widget.Toast;
 
 public class AndroDMTPMainService extends Service {
+	
+	private AndroDMTP dmtp = null;
+	
 	@Override
 	public IBinder onBind(Intent intent) {
 		// TODO Auto-generated method stub
@@ -27,10 +30,15 @@ public class AndroDMTPMainService extends Service {
         locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0, 0, locationListener);
         
         
-        AndroDMTP dmtp = AndroDMTP.getInstance((AndroDMTPLocationListener) locationListener);
+        dmtp = AndroDMTP.getInstance((AndroDMTPLocationListener) locationListener);
         
         dmtp.startApp();
 		
+	}
+	
+	@Override
+	public void onDestroy(){
+		dmtp.exitApp();
 	}
 	  
 	public int onStartCommand(Intent intent, int flags, int startId) {
