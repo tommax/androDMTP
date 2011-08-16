@@ -34,7 +34,7 @@
 package com.tommasocodella.androdmtp.opendmtp.client.base;
 
 import com.tommasocodella.androdmtp.opendmtp.client.custom.Constants;
-import com.tommasocodella.androdmtp.opendmtp.client.gps.GPSReceiver;
+import com.tommasocodella.androdmtp.opendmtp.client.gps.GPSUtils;
 import com.tommasocodella.androdmtp.opendmtp.codes.ClientErrors;
 import com.tommasocodella.androdmtp.opendmtp.codes.Encoding;
 import com.tommasocodella.androdmtp.opendmtp.codes.ServerErrors;
@@ -496,9 +496,9 @@ public class Protocol
         Log.setMessage(1, "TX UDP ...");
 
         /* check for GPS Fix expiration ("stale") */
-        if (GPSReceiver.isGpsStale()) {
+        if (GPSUtils.isGpsStale()) {
             // queue GPS error message
-            long lastSampleTime = GPSReceiver.getInstance().getLastSampleTime();
+            long lastSampleTime = GPSUtils.getInstance().getLastSampleTime();
             if (DateTime.getCurrentTimeSec() > (lastSampleTime + GPS_EVENT_INTERVAL)) {
                 // Likely serious GPS problem.
                 // We haven't received ANYTHING from the GPS reciver in the last GPS_EVENT_INTERVAL seconds
@@ -509,7 +509,7 @@ public class Protocol
                 this.queueError(p);
             } else {
                 // The GPS receiver still appears to be working, the fix is just expired
-                long lastValidTime = GPSReceiver.getInstance().getLastValidTime();
+                long lastValidTime = GPSUtils.getInstance().getLastValidTime();
                 Payload p = new Payload();
                 p.writeULong(ClientErrors.ERROR_GPS_EXPIRED, 2);
                 p.writeULong(lastValidTime                 , 4);
@@ -573,9 +573,9 @@ public class Protocol
         Log.setMessage(1, "TX TCP ...");
 
         /* check for GPS Fix expiration ("stale") */
-        if (GPSReceiver.isGpsStale()) {
+        if (GPSUtils.isGpsStale()) {
             // queue GPS error message
-            long lastSampleTime = GPSReceiver.getInstance().getLastSampleTime();
+            long lastSampleTime = GPSUtils.getInstance().getLastSampleTime();
             if (DateTime.getCurrentTimeSec() > (lastSampleTime + GPS_EVENT_INTERVAL)) {
                 // Likely serious GPS problem.
                 // We haven't received ANYTHING from the GPS reciver in the last GPS_EVENT_INTERVAL seconds
@@ -586,7 +586,7 @@ public class Protocol
                 this.queueError(p);
             } else {
                 // The GPS receiver still appears to be working, the fix is just expired
-                long lastValidTime = GPSReceiver.getInstance().getLastValidTime();
+                long lastValidTime = GPSUtils.getInstance().getLastValidTime();
                 Payload p = new Payload();
                 p.writeULong(ClientErrors.ERROR_GPS_EXPIRED, 2);
                 p.writeULong(lastValidTime                 , 4);
