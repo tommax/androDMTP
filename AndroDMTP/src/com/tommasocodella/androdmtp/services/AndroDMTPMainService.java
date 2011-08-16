@@ -15,10 +15,18 @@ import android.widget.Toast;
 
 public class AndroDMTPMainService extends Service {
 	
-	public static final int MSG_SAY_START 	= 0;
-	public static final int MSG_SAY_PAUSE 	= 1;
-	public static final int MSG_SAY_RESUME 	= 2;
-	public static final int MSG_SAY_STOP 	= 3;
+	public static final int MSG_SAY_START 		= 0;
+	public static final int MSG_SAY_PAUSE 		= 1;
+	public static final int MSG_SAY_RESUME 		= 2;
+	public static final int MSG_SAY_STOP 		= 3;
+	public static final int MSG_SAY_RESTART 	= 4;
+	
+	public static final int MSG_SET_SRVADDR		= 10;
+	public static final int MSG_SET_SRVPORT		= 11;
+	public static final int MSG_SET_SRVDEVICE	= 12;
+	public static final int MSG_SET_SRVACCOUNT	= 13;
+	public static final int MSG_SET_SRVUNIQUE	= 14;
+	public static final int MSG_SET_SRVACCESS	= 15;
 	
 	
 	private Thread androDMTPThread = new Thread(new RunnableAndroDMTP());
@@ -38,7 +46,7 @@ public class AndroDMTPMainService extends Service {
 	
 	class IncomingHandler extends Handler{
 		@Override
-		public void handleMessage(Message msg){
+		public void handleMessage(Message msg){		
 			switch (msg.what) {
 				case MSG_SAY_START:
 					Toast.makeText(getApplicationContext(), "AndroDMTP Started", Toast.LENGTH_SHORT).show();
@@ -56,6 +64,30 @@ public class AndroDMTPMainService extends Service {
 					Toast.makeText(getApplicationContext(), "AndroDMTP Stopped", Toast.LENGTH_SHORT).show();
 					dmtp.exitApp();
 					break;
+				case MSG_SAY_RESTART:	
+					Toast.makeText(getApplicationContext(), "AndroDMTP Restarted", Toast.LENGTH_SHORT).show();
+					dmtp.restartApp();
+					break;
+					
+				case MSG_SET_SRVADDR:
+					dmtp.setServerAddr((String) msg.obj);
+					break;
+				case MSG_SET_SRVPORT:
+					dmtp.setServerPort((String) msg.obj);
+					break;
+				case MSG_SET_SRVDEVICE:
+					dmtp.setServerDevice((String) msg.obj);
+					break;
+				case MSG_SET_SRVACCOUNT:
+					dmtp.setServerAccount((String) msg.obj);
+					break;
+				case MSG_SET_SRVUNIQUE:
+					dmtp.setServerUnique((String) msg.obj);
+					break;
+				case MSG_SET_SRVACCESS:
+					dmtp.setServerAccess((String) msg.obj);
+					break;
+
 
 				default:
 					super.handleMessage(msg);

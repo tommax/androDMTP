@@ -1,6 +1,8 @@
 package com.tommasocodella.androdmtp.configurationapp;
 
 import com.tommasocodella.androdmtp.R;
+import com.tommasocodella.androdmtp.services.AndroDMTPMainService;
+
 import android.app.TabActivity;
 import android.content.Intent;
 import android.content.res.Resources;
@@ -8,6 +10,7 @@ import android.os.Bundle;
 import android.widget.TabHost;
 
 public class ConfigurationApp extends TabActivity {
+	Intent androDMTPService;
 	
 	@Override
 	public void onCreate(Bundle savedInstanceState){
@@ -43,6 +46,9 @@ public class ConfigurationApp extends TabActivity {
 		tabHost.addTab(spec);
 		
 		tabHost.setCurrentTab(0);
+		
+		androDMTPService = new Intent(this, AndroDMTPMainService.class);
+		startService(androDMTPService);
 	}
 	
 	@Override

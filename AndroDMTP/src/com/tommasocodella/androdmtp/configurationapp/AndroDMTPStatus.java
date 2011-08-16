@@ -37,7 +37,6 @@ public class AndroDMTPStatus extends Activity{
             // interact with the service.  We are communicating with the
             // service using a Messenger, so here we get a client-side
             // representation of that from the raw IBinder object.
-        	System.out.println("attached.");
             mService = new Messenger(service);
             mBound = true;
         }
@@ -103,7 +102,6 @@ public class AndroDMTPStatus extends Activity{
 
         Toast.makeText(getApplicationContext(), "AndroDMTP send binding", Toast.LENGTH_SHORT).show();
         androDMTPService = new Intent(this, AndroDMTPMainService.class);
-		startService(androDMTPService);
 		getApplicationContext().bindService(androDMTPService, mConnection, Context.BIND_AUTO_CREATE);
     }
 	
@@ -114,6 +112,7 @@ public class AndroDMTPStatus extends Activity{
 		public void onClick(View v) {
 			Button startButton = (Button) findViewById(R.id.startDMTP);
 			Button pauseButton = (Button) findViewById(R.id.pauseDMTP);
+			Button applyServerSettings = (Button) findViewById(R.id.applyserver);
 			
 			if(statusImageGreen.getVisibility() == ImageView.INVISIBLE){
 				startButton.setText("STOP");

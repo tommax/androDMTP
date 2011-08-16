@@ -70,6 +70,13 @@ public class AndroDMTP implements Runnable, Props.SavePropsCallBack{
     private GeoEvent           			lastValidGPSFix			= new GeoEvent();
     private long                		loopDelayMS				= STANDARD_LOOP_DELAY;
     private boolean						pause					= false;
+    private String						serverAddr				= null;
+    private String						serverPort				= null;
+    private String						serverAccount			= null;
+    private String						serverDevice			= null;
+	private String						serverAccess			= null;
+	private String						serverUnique			= null;
+    private String						dmtpAccessString		= "";
     //private TimeModules         		timeModules 			= null;
     //private long                		lastTimeEventTimer 		= 0L;
     
@@ -78,6 +85,63 @@ public class AndroDMTP implements Runnable, Props.SavePropsCallBack{
     public static String getTitle(){
         return TITLE;
     }
+    
+    public String getServerAddr() {
+		return serverAddr;
+	}
+
+	public void setServerAddr(String serverAddr) {
+		this.serverAddr = serverAddr;
+	}
+
+	public String getServerPort() {
+		return serverPort;
+	}
+
+	public void setServerPort(String serverPort) {
+		this.serverPort = serverPort;
+	}
+
+	public String getServerAccount() {
+		return serverAccount;
+	}
+
+	public void setServerAccount(String serverAccount) {
+		this.serverAccount = serverAccount;
+	}
+
+	public String getServerDevice() {
+		return serverDevice;
+	}
+
+	public void setServerDevice(String serverDevice) {
+		this.serverDevice = serverDevice;
+	}
+
+	public String getServerAccess() {
+		return serverAccess;
+	}
+
+	public void setServerAccess(String serverAccess) {
+		this.serverAccess = serverAccess;
+	}
+	
+	public String getServerUnique() {
+		return serverUnique;
+	}
+
+	public void setServerUnique(String serverUnique) {
+		if(serverUnique.length() > 0)
+			this.serverUnique = serverUnique;
+	}
+
+	public String getDmtpAccessString() {
+		return dmtpAccessString;
+	}
+
+	public void setDmtpAccessString(String dmtpAccessString) {
+		this.dmtpAccessString = dmtpAccessString;
+	}
     
     //	Constructor section
     
@@ -125,7 +189,17 @@ public class AndroDMTP implements Runnable, Props.SavePropsCallBack{
                 // DMTP-Access: Access,Host,Port,Account,Device,Unique
                 // DMTP-Access: 2560797743,data.example.com,31000,opendmtp,moto
                 // DMTP-Access: 123456FFFF,data.example.com,31000,opendmtp,moto
-                String acc[] = StringTools.parseString(DMTP_ACCESS,',');
+            	
+            	String acc[];
+            	if(serverAddr!=null && serverPort!=null && serverAccount!=null && serverDevice!=null && serverAccess!=null){
+            		this.setDmtpAccessString(serverAccess + "," + serverAddr + "," + serverPort + "," + serverAccount + "," + serverDevice);
+            		if(serverUnique!=null && serverUnique.length() > 0)
+            			this.setDmtpAccessString(serverAccess + "," + serverAddr + "," + serverPort + "," + serverAccount + "," + serverDevice + "," + serverUnique);
+            		acc = StringTools.parseString(this.getDmtpAccessString(),',');
+            	}else{
+            		acc = StringTools.parseString(DMTP_ACCESS,',');
+            	}
+
                 accessCheckSum = StringTools.parseHexLong(((acc.length>0)?acc[0]:""),accessCheckSum);
                 String H = (acc.length > 1)? acc[1] : COMM_HOST;
                 String P = (acc.length > 2)? acc[2] : COMM_PORT;
@@ -314,9 +388,16 @@ public class AndroDMTP implements Runnable, Props.SavePropsCallBack{
         // save current display
         try {
             this.destroyApp();
+            this.startupInit = false;
         } catch (Exception msce) {
             // this won't occur
         }
+    }
+    
+    //	Restart application.
+    public void restartApp(){
+    	exitApp();
+    	startApp();
     }
     
     //	Loads properties from storage.
