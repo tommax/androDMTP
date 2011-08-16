@@ -44,4 +44,10 @@ public class ConfigurationApp extends TabActivity {
 		
 		tabHost.setCurrentTab(0);
 	}
+	
+	@Override
+    protected void onStop() {
+        super.onStop();
+        finish();
+    }
 }

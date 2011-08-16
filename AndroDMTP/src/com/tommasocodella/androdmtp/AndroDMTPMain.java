@@ -28,7 +28,8 @@ public class AndroDMTPMain extends Activity{
         
         
         
-        /*LocationManager locationManager = (LocationManager)this.getSystemService(Context.LOCATION_SERVICE);
+        /*
+         * LocationManager locationManager = (LocationManager)this.getSystemService(Context.LOCATION_SERVICE);
         LocationListener locationListener = new AndroDMTPLocationListener();
         
         locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0, 0, locationListener);

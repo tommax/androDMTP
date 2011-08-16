@@ -1,7 +1,12 @@
 package com.tommasocodella.androdmtp.services;
 
+import com.tommasocodella.androdmtp.gps.AndroDMTPLocationListener;
+
 import android.app.Service;
+import android.content.Context;
 import android.content.Intent;
+import android.location.LocationListener;
+import android.location.LocationManager;
 import android.os.IBinder;
 import android.widget.Toast;
 
@@ -14,7 +19,13 @@ public class AndroDMTPMainService extends Service {
 	
 	@Override
 	public void onCreate() {
-		Toast.makeText(this, "service starting", Toast.LENGTH_SHORT).show();
+		Toast.makeText(this, "AndroDMTP instantiated", Toast.LENGTH_SHORT).show();
+		
+		LocationManager locationManager = (LocationManager)this.getSystemService(Context.LOCATION_SERVICE);
+        LocationListener locationListener = new AndroDMTPLocationListener();
+        
+        locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0, 0, locationListener);
+		
 	}
 	  
 	public int onStartCommand(Intent intent, int flags, int startId) {

@@ -1,8 +1,9 @@
-package com.tommasocodella.androdmtp;
+package com.tommasocodella.androdmtp.services;
 
 import android.location.LocationListener;
 import android.location.LocationManager;
 
+import com.tommasocodella.androdmtp.TransportImpl;
 import com.tommasocodella.androdmtp.gps.AndroDMTPLocationListener;
 import com.tommasocodella.androdmtp.opendmtp.client.base.GPSModules;
 import com.tommasocodella.androdmtp.opendmtp.client.base.Packet;
@@ -21,7 +22,7 @@ import com.tommasocodella.androdmtp.opendmtp.util.GeoEvent;
 import com.tommasocodella.androdmtp.opendmtp.util.Log;
 import com.tommasocodella.androdmtp.opendmtp.util.StringTools;
 
-public class MainClass implements Runnable, Props.SavePropsCallBack{
+public class AndroDMTP implements Runnable, Props.SavePropsCallBack{
 
     private static final boolean FREE_ACCESS        = true;
     
@@ -88,7 +89,7 @@ public class MainClass implements Runnable, Props.SavePropsCallBack{
 
     // ----------------------------------------------------------------------------
     
-    private static MainClass  DMTP_Main = null;
+    private static AndroDMTP  DMTP_Main = null;
     
     private AndroDMTPLocationListener locationListener;
     
@@ -97,9 +98,9 @@ public class MainClass implements Runnable, Props.SavePropsCallBack{
     * Returns the singleton instance of this application.
     * @return current instance.
     */
-    public static MainClass getInstance(AndroDMTPLocationListener locationListener){
+    public static AndroDMTP getInstance(AndroDMTPLocationListener locationListener){
         if (DMTP_Main == null) {
-            DMTP_Main = new MainClass(locationListener);
+            DMTP_Main = new AndroDMTP(locationListener);
         }
         return DMTP_Main;
     }
@@ -131,7 +132,7 @@ public class MainClass implements Runnable, Props.SavePropsCallBack{
     * Creates and register MIDlet application within the system and associates it with this
     * implementation.
     */
-    public MainClass(AndroDMTPLocationListener locationListener){
+    public AndroDMTP(AndroDMTPLocationListener locationListener){
         super();
         DMTP_Main = this;
         this.locationListener = locationListener;
@@ -276,7 +277,7 @@ public class MainClass implements Runnable, Props.SavePropsCallBack{
             String firmware = Props.getString(Props.PROP_STATE_FIRMWARE,"");
             String serial   = Props.getString(Props.PROP_STATE_SERIAL ,"");
             Log.println(LOG_NAME, "OpenDMTP protocol reference implementation.");
-            Log.println(LOG_NAME, "Title  : " + MainClass.getTitle());
+            Log.println(LOG_NAME, "Title  : " + AndroDMTP.getTitle());
             Log.println(LOG_NAME, "Version: " + DMTP_VERSION + " [" + serial + "]");
             Log.println(LOG_NAME, COPYRIGHT);
 
