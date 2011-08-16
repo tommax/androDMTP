@@ -40,10 +40,10 @@ public class AndroDMTP implements Runnable, Props.SavePropsCallBack{
     private static final String MOTION_STOP			= "210";        // seconds
     private static final String MOTION_DORMANT		= "1800";       // seconds
     private static final String LOG_NAME			= "MAIN";
-    public  static final String COPYRIGHT			= "Copyright 2007-2009, GeoTelematic Solutions, Inc.";    
-    public  static final String RELEASE_VERSION		= "1.2.2";
-    private static final String DMTP_NAME			= "OpenDMTP";
-    private static final String DMTP_TYPE			= "J2ME";
+    public  static final String COPYRIGHT			= "Copyright 2011 Tommaso Codella - 2007-2009, GeoTelematic Solutions, Inc.";    
+    public  static final String RELEASE_VERSION		= "0.5";
+    private static final String DMTP_NAME			= "AndroDMTP";
+    private static final String DMTP_TYPE			= "Android";
     public  static final String DMTP_VERSION		= DMTP_NAME + "_" + DMTP_TYPE + "." + RELEASE_VERSION;    
     public  static final String TITLE				= "MotoDMTP";
     private static final boolean ENABLE_EVENTS		= true;
@@ -69,6 +69,7 @@ public class AndroDMTP implements Runnable, Props.SavePropsCallBack{
     private long                		lastGPSAcquisitionTimer = 0L;
     private GeoEvent           			lastValidGPSFix			= new GeoEvent();
     private long                		loopDelayMS				= STANDARD_LOOP_DELAY;
+    private boolean						pause					= false;
     //private TimeModules         		timeModules 			= null;
     //private long                		lastTimeEventTimer 		= 0L;
     
@@ -291,7 +292,14 @@ public class AndroDMTP implements Runnable, Props.SavePropsCallBack{
     //	Pauses application.
     public void pauseApp(){
         // save current display
-        Log.info(LOG_NAME, "**** Application PAUSED ...");
+        Log.info(LOG_NAME, "Application PAUSED");
+        this.pause = true;
+    }
+    
+    //	Awake application.
+    public void awakeApp(){
+    	Log.info(LOG_NAME, "Application AWAKED");
+    	this.pause = false;
     }
     
     //	Destroys application. During the process all properties saved into storage.
@@ -333,6 +341,7 @@ public class AndroDMTP implements Runnable, Props.SavePropsCallBack{
     //	Tread run method
     public void run(){
         while (!this.mainLoopThread.shouldStop()) {
+        	while(this.pause){};
             try{
             	//	Acquire GPS
                 boolean didAcquireGPS = false;

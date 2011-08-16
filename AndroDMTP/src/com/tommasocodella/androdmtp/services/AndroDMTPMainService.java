@@ -7,38 +7,92 @@ import android.content.Context;
 import android.content.Intent;
 import android.location.LocationListener;
 import android.location.LocationManager;
+import android.os.Handler;
 import android.os.IBinder;
+import android.os.Message;
+import android.os.Messenger;
 import android.widget.Toast;
 
 public class AndroDMTPMainService extends Service {
 	
+	public static final int MSG_SAY_START 	= 0;
+	public static final int MSG_SAY_PAUSE 	= 1;
+	public static final int MSG_SAY_RESUME 	= 2;
+	public static final int MSG_SAY_STOP 	= 3;
+	
+	
+	private Thread androDMTPThread = new Thread(new RunnableAndroDMTP());
 	private AndroDMTP dmtp = null;
+	private LocationListener locationListener;
+	final Messenger mMessenger = new Messenger(new IncomingHandler());
+	
+	private class RunnableAndroDMTP implements Runnable{
+		
+		@Override
+		public void run() {
+			dmtp.getInstance((AndroDMTPLocationListener) locationListener).startApp();
+		}
+		
+	}
+	
+	
+	class IncomingHandler extends Handler{
+		@Override
+		public void handleMessage(Message msg){
+			switch (msg.what) {
+				case MSG_SAY_START:
+					Toast.makeText(getApplicationContext(), "AndroDMTP Started", Toast.LENGTH_SHORT).show();
+					dmtp.startApp();
+					break;
+				case MSG_SAY_PAUSE:
+					Toast.makeText(getApplicationContext(), "AndroDMTP Paused", Toast.LENGTH_SHORT).show();
+					dmtp.pauseApp();
+					break;
+				case MSG_SAY_RESUME:
+					Toast.makeText(getApplicationContext(), "AndroDMTP Resumed", Toast.LENGTH_SHORT).show();
+					dmtp.awakeApp();
+					break;
+				case MSG_SAY_STOP:
+					Toast.makeText(getApplicationContext(), "AndroDMTP Stopped", Toast.LENGTH_SHORT).show();
+					dmtp.exitApp();
+					break;
+
+				default:
+					super.handleMessage(msg);
+					break;
+			}
+		}
+	}
+	
+	
 	
 	@Override
 	public IBinder onBind(Intent intent) {
-		// TODO Auto-generated method stub
-		return null;
+		Toast.makeText(getApplicationContext(), "AndroDMTP binded", Toast.LENGTH_SHORT).show();
+		return mMessenger.getBinder();
 	}
 	
 	@Override
 	public void onCreate() {
-		Toast.makeText(this, "AndroDMTP instantiated", Toast.LENGTH_SHORT).show();
+		//Toast.makeText(this, "AndroDMTP instantiated", Toast.LENGTH_SHORT).show();
 		
 		LocationManager locationManager = (LocationManager)this.getSystemService(Context.LOCATION_SERVICE);
-        LocationListener locationListener = new AndroDMTPLocationListener();
+        locationListener = new AndroDMTPLocationListener();
         
         locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0, 0, locationListener);
         
+        //androDMTPThread.start();
         
         dmtp = AndroDMTP.getInstance((AndroDMTPLocationListener) locationListener);
         
-        dmtp.startApp();
+        
 		
 	}
 	
 	@Override
 	public void onDestroy(){
-		dmtp.exitApp();
+		androDMTPThread.stop();
+		stopSelf();
 	}
 	  
 	public int onStartCommand(Intent intent, int flags, int startId) {

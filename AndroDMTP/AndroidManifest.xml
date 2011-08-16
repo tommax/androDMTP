@@ -18,7 +18,6 @@
         <activity android:name=".configurationapp.GPSSettings"></activity>
         <activity android:name=".configurationapp.ServerSettings"></activity>
         <activity android:name=".configurationapp.ComunicationSettings"></activity>
-        <activity android:name=".AndroDMTPMain"></activity>
         <activity android:name=".configurationapp.AndroDMTPStatus"></activity>
 
     </application>

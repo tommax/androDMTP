@@ -55,6 +55,22 @@ public class CThread
             thread.startThread(true);
         }
     }
+    
+    public static void pauseThreads() throws InterruptedException{
+    	for (Enumeration i = threadMap.keys(); i.hasMoreElements();) {
+            String name = (String)i.nextElement();
+            CThread thread = (CThread)threadMap.get(name);
+            thread.getThread(false).wait();
+        }
+    }
+    
+    public static void awakeThreads() throws InterruptedException{
+    	for (Enumeration i = threadMap.keys(); i.hasMoreElements();) {
+            String name = (String)i.nextElement();
+            CThread thread = (CThread)threadMap.get(name);
+            thread.getThread(false).notify();
+        }
+    }
 
     /**
     * Stops all threads.
