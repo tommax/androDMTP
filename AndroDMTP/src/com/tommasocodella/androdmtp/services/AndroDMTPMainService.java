@@ -25,6 +25,11 @@ public class AndroDMTPMainService extends Service {
         LocationListener locationListener = new AndroDMTPLocationListener();
         
         locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0, 0, locationListener);
+        
+        
+        AndroDMTP dmtp = AndroDMTP.getInstance((AndroDMTPLocationListener) locationListener);
+        
+        dmtp.startApp();
 		
 	}
 	  

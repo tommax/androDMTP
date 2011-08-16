@@ -24,7 +24,7 @@
 //     -Initial release
 //     -Initial JavaDocs provided by Robert S. Brewer
 // ----------------------------------------------------------------------------
-package com.tommasocodella.androdmtp;
+package com.tommasocodella.androdmtp.services;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;

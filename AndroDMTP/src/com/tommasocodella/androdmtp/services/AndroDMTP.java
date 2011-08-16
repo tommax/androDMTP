@@ -3,7 +3,6 @@ package com.tommasocodella.androdmtp.services;
 import android.location.LocationListener;
 import android.location.LocationManager;
 
-import com.tommasocodella.androdmtp.TransportImpl;
 import com.tommasocodella.androdmtp.gps.AndroDMTPLocationListener;
 import com.tommasocodella.androdmtp.opendmtp.client.base.GPSModules;
 import com.tommasocodella.androdmtp.opendmtp.client.base.Packet;
