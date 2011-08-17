@@ -28,20 +28,22 @@ public class AndroDMTPMainService extends Service {
 	public static final int MSG_SET_SRVUNIQUE	= 14;
 	public static final int MSG_SET_SRVACCESS	= 15;
 	
+	public static final int MSG_SET_GPSRATE				= 20;
+	public static final int MSG_SET_GPSACCURACY			= 21;
+	public static final int MSG_SET_GPSMINSPEED			= 22;
+	public static final int MSG_SET_GPSMOTIONSTARTTYPE	= 23;
+	public static final int MSG_SET_GPSMOTIONSTARTMETER	= 24;
+	public static final int MSG_SET_GPSMOTIONSTARTKPH	= 25;
+	public static final int MSG_SET_GPSMOTIONINMOTION	= 26;
+	public static final int MSG_SET_GPSMOTIONSTOP		= 27;
+	public static final int MSG_SET_GPSMOTIONDORMANT	= 28;
 	
-	private Thread androDMTPThread = new Thread(new RunnableAndroDMTP());
+	
 	private AndroDMTP dmtp = null;
 	private LocationListener locationListener;
 	final Messenger mMessenger = new Messenger(new IncomingHandler());
 	
-	private class RunnableAndroDMTP implements Runnable{
-		
-		@Override
-		public void run() {
-			dmtp.getInstance((AndroDMTPLocationListener) locationListener).startApp();
-		}
-		
-	}
+	
 	
 	
 	class IncomingHandler extends Handler{
@@ -87,6 +89,34 @@ public class AndroDMTPMainService extends Service {
 				case MSG_SET_SRVACCESS:
 					dmtp.setServerAccess((String) msg.obj);
 					break;
+					
+				case MSG_SET_GPSRATE:
+					dmtp.setGpsRate((String) msg.obj);
+					break;
+				case MSG_SET_GPSACCURACY:
+					dmtp.setGpsAccuracy((String) msg.obj);
+					break;
+				case MSG_SET_GPSMINSPEED:
+					dmtp.setGpsMinSpeed((String) msg.obj);
+					break;
+				case MSG_SET_GPSMOTIONSTARTTYPE:
+					dmtp.setMotionStartType(msg.arg1);
+					break;
+				case MSG_SET_GPSMOTIONSTARTMETER:
+					dmtp.setMotionStartMeter((String) msg.obj);
+					break;
+				case MSG_SET_GPSMOTIONSTARTKPH:
+					dmtp.setMotionStartKph((String) msg.obj);
+					break;
+				case MSG_SET_GPSMOTIONINMOTION:
+					dmtp.setMotionInMotion((String) msg.obj);
+					break;
+				case MSG_SET_GPSMOTIONSTOP:
+					dmtp.setMotionStop((String) msg.obj);
+					break;
+				case MSG_SET_GPSMOTIONDORMANT:
+					dmtp.setMotionDormant((String) msg.obj);
+					break;
 
 
 				default:
@@ -112,9 +142,7 @@ public class AndroDMTPMainService extends Service {
         locationListener = new AndroDMTPLocationListener();
         
         locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0, 0, locationListener);
-        
-        //androDMTPThread.start();
-        
+               
         dmtp = AndroDMTP.getInstance((AndroDMTPLocationListener) locationListener);
         
         
@@ -123,7 +151,6 @@ public class AndroDMTPMainService extends Service {
 	
 	@Override
 	public void onDestroy(){
-		androDMTPThread.stop();
 		stopSelf();
 	}
 	  

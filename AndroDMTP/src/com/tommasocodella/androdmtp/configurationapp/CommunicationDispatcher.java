@@ -15,7 +15,7 @@ public class CommunicationDispatcher extends Service{
 	
 	public final static int ACTIVITY_SERVER_SETTING_REGISTRATION 	= 1;
 	public final static int ACTIVITY_STATUS_REGISTRATION 			= 2;
-	
+	public final static int ACTIVITY_GPS_SETTING_REGISTRATION 		= 3;
 	
 	
 	public final static int DISABLE_APPLY_BUTTON_SERVER_SETTINGS	= 10;
@@ -25,6 +25,7 @@ public class CommunicationDispatcher extends Service{
 	private ArrayList<Integer> serverSettingNotReceived		= new ArrayList<Integer>();
 	
 	private Messenger statusActivity 						= null;
+	private Messenger gpsActivity	 						= null;
 	
 	final Messenger mMessenger = new Messenger(new IncomingMessageHandler());
 	
@@ -50,6 +51,11 @@ public class CommunicationDispatcher extends Service{
 				case ACTIVITY_STATUS_REGISTRATION:
 					statusActivity = msg.replyTo;
 					Toast.makeText(getApplicationContext(), "STATUS REGISTERED", Toast.LENGTH_SHORT).show();
+					break;
+					
+				case ACTIVITY_GPS_SETTING_REGISTRATION:
+					gpsActivity = msg.replyTo;
+					Toast.makeText(getApplicationContext(), "GPS SETTING REGISTERED", Toast.LENGTH_SHORT).show();
 					break;
 				
 				case DISABLE_APPLY_BUTTON_SERVER_SETTINGS:

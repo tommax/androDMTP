@@ -23,22 +23,12 @@ public class AndroDMTP implements Runnable, Props.SavePropsCallBack{
 	//	Constant  declaration
 	
     private static final boolean FREE_ACCESS        = true;
-    private static final String DMTP				= "DMTP-";
     private static final String DMTP_ACCESS			= "2560797743,192.168.1.3,31000,opendmtp,moto"; //"DMTP-Access";
     private static final String COMM_HOST			= "localhost";
     private static final String COMM_PORT			= "0";
     private static final String ACCOUNT_ID			= "opendmtp";
     private static final String DEVICE_ID			= "mobile";
     private static final String UNIQUE_ID			= "";
-    private static final String GPS_RATE			= "2";         // seconds
-    private static final String GPS_ACCURACY		= "200";        // meters
-    private static final String GPS_MINSPEED		= "0.5";       // kph [7.3 mph]
-    private static final int    MOTION_START_TYPE	= 0;
-    private static final String MOTION_START_METERS	= "150.0";      // meters
-    private static final String MOTION_START_KPH	= "16.1";       // kph [10 mph]
-    private static final String MOTION_INMOTION		= "120";        // seconds
-    private static final String MOTION_STOP			= "210";        // seconds
-    private static final String MOTION_DORMANT		= "1800";       // seconds
     private static final String LOG_NAME			= "MAIN";
     public  static final String COPYRIGHT			= "Copyright 2011 Tommaso Codella - 2007-2009, GeoTelematic Solutions, Inc.";    
     public  static final String RELEASE_VERSION		= "0.5";
@@ -47,9 +37,7 @@ public class AndroDMTP implements Runnable, Props.SavePropsCallBack{
     public  static final String DMTP_VERSION		= DMTP_NAME + "_" + DMTP_TYPE + "." + RELEASE_VERSION;    
     public  static final String TITLE				= "MotoDMTP";
     private static final boolean ENABLE_EVENTS		= true;
-    private static final long TIME_SAMPLE_INTERVAL	= 2L; // seconds
     private static final long STANDARD_LOOP_DELAY	= 2000L; // millis
-    private static final long FAST_LOOP_DELAY		= 20L; // millis
     private static final long LOOP_DELAY_INCREMENT	= 30L; // millis
     
     //	Variable declaration
@@ -77,6 +65,15 @@ public class AndroDMTP implements Runnable, Props.SavePropsCallBack{
 	private String						serverAccess			= null;
 	private String						serverUnique			= null;
     private String						dmtpAccessString		= "";
+    private String 						gpsRate					= "2";		// seconds
+    private String 						gpsAccuracy				= "200";    // meters
+    private String 						gpsMinSpeed				= "0.5";    // kph [7.3 mph]
+    private int    						motionStartType			= 0;
+    private String 						motionStartMeter		= "150.0";	// meters
+    private String 						motionStartKph			= "16.1";   // kph [10 mph]
+    private String 						motionInMotion			= "120";    // seconds
+    private String						motionStop				= "210";    // seconds
+    private String 						motionDormant			= "1800";   // seconds
     //private TimeModules         		timeModules 			= null;
     //private long                		lastTimeEventTimer 		= 0L;
     
@@ -145,7 +142,219 @@ public class AndroDMTP implements Runnable, Props.SavePropsCallBack{
     
     //	Constructor section
     
-    public AndroDMTP(AndroDMTPLocationListener locationListener){
+    public AndroDMTPLocationListener getLocationListener() {
+		return locationListener;
+	}
+
+	public void setLocationListener(AndroDMTPLocationListener locationListener) {
+		this.locationListener = locationListener;
+	}
+
+	public PersistentStorage getPropsStore() {
+		return propsStore;
+	}
+
+	public void setPropsStore(PersistentStorage propsStore) {
+		this.propsStore = propsStore;
+	}
+
+	public boolean isStartupInit() {
+		return startupInit;
+	}
+
+	public void setStartupInit(boolean startupInit) {
+		this.startupInit = startupInit;
+	}
+
+	public CThread getMainLoopThread() {
+		return mainLoopThread;
+	}
+
+	public void setMainLoopThread(CThread mainLoopThread) {
+		this.mainLoopThread = mainLoopThread;
+	}
+
+	public Protocol getProtocol() {
+		return protocol;
+	}
+
+	public void setProtocol(Protocol protocol) {
+		this.protocol = protocol;
+	}
+
+	public GPSUtils getGpsUtils() {
+		return gpsUtils;
+	}
+
+	public void setGpsUtils(GPSUtils gpsUtils) {
+		this.gpsUtils = gpsUtils;
+	}
+
+	public GeoEvent getGpsEvent() {
+		return gpsEvent;
+	}
+
+	public void setGpsEvent(GeoEvent gpsEvent) {
+		this.gpsEvent = gpsEvent;
+	}
+
+	public GPSModules getGpsModules() {
+		return gpsModules;
+	}
+
+	public void setGpsModules(GPSModules gpsModules) {
+		this.gpsModules = gpsModules;
+	}
+
+	public boolean isSentInitializedEvent() {
+		return sentInitializedEvent;
+	}
+
+	public void setSentInitializedEvent(boolean sentInitializedEvent) {
+		this.sentInitializedEvent = sentInitializedEvent;
+	}
+
+	public long getGpsStaleTimer() {
+		return gpsStaleTimer;
+	}
+
+	public void setGpsStaleTimer(long gpsStaleTimer) {
+		this.gpsStaleTimer = gpsStaleTimer;
+	}
+
+	public long getLastGPSAcquisitionTimer() {
+		return lastGPSAcquisitionTimer;
+	}
+
+	public void setLastGPSAcquisitionTimer(long lastGPSAcquisitionTimer) {
+		this.lastGPSAcquisitionTimer = lastGPSAcquisitionTimer;
+	}
+
+	public GeoEvent getLastValidGPSFix() {
+		return lastValidGPSFix;
+	}
+
+	public void setLastValidGPSFix(GeoEvent lastValidGPSFix) {
+		this.lastValidGPSFix = lastValidGPSFix;
+	}
+
+	public long getLoopDelayMS() {
+		return loopDelayMS;
+	}
+
+	public void setLoopDelayMS(long loopDelayMS) {
+		this.loopDelayMS = loopDelayMS;
+	}
+
+	public boolean isPause() {
+		return pause;
+	}
+
+	public void setPause(boolean pause) {
+		this.pause = pause;
+	}
+
+	public String getGpsRate() {
+		return gpsRate;
+	}
+
+	public void setGpsRate(String gpsRate) {
+		this.gpsRate = gpsRate;
+	}
+
+	public String getGpsAccuracy() {
+		return gpsAccuracy;
+	}
+
+	public void setGpsAccuracy(String gpsAccuracy) {
+		this.gpsAccuracy = gpsAccuracy;
+	}
+
+	public String getGpsMinSpeed() {
+		return gpsMinSpeed;
+	}
+
+	public void setGpsMinSpeed(String gpsMinSpeed) {
+		this.gpsMinSpeed = gpsMinSpeed;
+	}
+
+	public int getPendingPing() {
+		return pendingPing;
+	}
+
+	public int getMotionstarttype() {
+		return motionStartType;
+	}
+
+	public String getMotionstartmeter() {
+		return motionStartMeter;
+	}
+
+	public String getMotionstartkph() {
+		return motionStartKph;
+	}
+
+	public String getMotioninmotion() {
+		return motionInMotion;
+	}
+
+	public String getMotionstop() {
+		return motionStop;
+	}
+
+	public String getMotiondormant() {
+		return motionDormant;
+	}
+
+	public int getMotionStartType() {
+		return motionStartType;
+	}
+
+	public void setMotionStartType(int motionStartType) {
+		this.motionStartType = motionStartType;
+	}
+
+	public String getMotionStartMeter() {
+		return motionStartMeter;
+	}
+
+	public void setMotionStartMeter(String motionStartMeter) {
+		this.motionStartMeter = motionStartMeter;
+	}
+
+	public String getMotionStartKph() {
+		return motionStartKph;
+	}
+
+	public void setMotionStartKph(String motionStartKph) {
+		this.motionStartKph = motionStartKph;
+	}
+
+	public String getMotionInMotion() {
+		return motionInMotion;
+	}
+
+	public void setMotionInMotion(String motionInMotion) {
+		this.motionInMotion = motionInMotion;
+	}
+
+	public String getMotionStop() {
+		return motionStop;
+	}
+
+	public void setMotionStop(String motionStop) {
+		this.motionStop = motionStop;
+	}
+
+	public String getMotionDormant() {
+		return motionDormant;
+	}
+
+	public void setMotionDormant(String motionDormant) {
+		this.motionDormant = motionDormant;
+	}
+
+	public AndroDMTP(AndroDMTPLocationListener locationListener){
         super();
         DMTP_Main = this;
         this.locationListener = locationListener;
@@ -166,10 +375,9 @@ public class AndroDMTP implements Runnable, Props.SavePropsCallBack{
     //	Main app code section
     
     
-    /**
-    * Starts application. Initializes all properties and starts GPS module as well.
-    */
-    public void startApp(){
+    //	Starts application. Initializes all properties and starts GPS module as well.
+    @SuppressWarnings("unused")
+	public void startApp(){
         if (!this.startupInit) {
             //	A new execution of AndroDMTP is started so all params must be setted
             Log.info(LOG_NAME, "AndroDTMP service started");
@@ -219,24 +427,24 @@ public class AndroDMTP implements Runnable, Props.SavePropsCallBack{
             try{
                 Props.initFromString(Props.PROP_CFG_GPS_PORT            	, "rfcm"             , true); // bluetooth
                 Props.initFromString(Props.PROP_CFG_GPS_BPS             	, "4800"             , true);
-                Props.initFromString(Props.PROP_GPS_SAMPLE_RATE         	, GPS_RATE           , true); // seconds
-                Props.initFromString(Props.PROP_GPS_ACCURACY            	, GPS_ACCURACY       , true); // meters
-                Props.initFromString(Props.PROP_GPS_MIN_SPEED           	, GPS_MINSPEED       , true); // kph
+                Props.initFromString(Props.PROP_GPS_SAMPLE_RATE         	, gpsRate            , true); // seconds
+                Props.initFromString(Props.PROP_GPS_ACCURACY            	, gpsAccuracy        , true); // meters
+                Props.initFromString(Props.PROP_GPS_MIN_SPEED           	, gpsMinSpeed        , true); // kph
                 Props.initFromString(Props.PROP_COMM_MAX_CONNECTIONS    	, "30,30,30"         , true);
-                Props.initFromString(Props.PROP_COMM_MIN_XMIT_DELAY     	, "5"               , true); // seconds
-                Props.initFromString(Props.PROP_COMM_MIN_XMIT_RATE      	, "60"               , true); // seconds
+                Props.initFromString(Props.PROP_COMM_MIN_XMIT_DELAY     	, "5"                , true); // seconds
+                Props.initFromString(Props.PROP_COMM_MIN_XMIT_RATE      	, "20"               , true); // seconds
                 
-                if(MOTION_START_TYPE == 0){
+                if(motionStartType == 0){
                 	Props.initFromString(Props.PROP_MOTION_START_TYPE       , "0"                , true); // 0=kph
-                	Props.initFromString(Props.PROP_MOTION_START            , MOTION_START_KPH   , true); // kph
+                	Props.initFromString(Props.PROP_MOTION_START            , motionStartKph   , true); // kph
                 }else{
                 	Props.initFromString(Props.PROP_MOTION_START_TYPE       , "1"                , true); // 1=meters
-                	Props.initFromString(Props.PROP_MOTION_START            , MOTION_START_METERS, true); // meters
+                	Props.initFromString(Props.PROP_MOTION_START            , motionStartMeter, true); // meters
                 }
                 
-                Props.initFromString(Props.PROP_MOTION_IN_MOTION        	, MOTION_INMOTION    , true); // seconds
-                Props.initFromString(Props.PROP_MOTION_STOP             	, MOTION_STOP        , true); // seconds
-                Props.initFromString(Props.PROP_MOTION_DORMANT_INTRVL   	, MOTION_DORMANT     , true); // seconds
+                Props.initFromString(Props.PROP_MOTION_IN_MOTION        	, motionInMotion    , true); // seconds
+                Props.initFromString(Props.PROP_MOTION_STOP             	, motionStop        , true); // seconds
+                Props.initFromString(Props.PROP_MOTION_DORMANT_INTRVL   	, motionDormant     , true); // seconds
                 Props.initFromString(Props.PROP_MOTION_DORMANT_COUNT    	, "0"                , true); // count
                 Props.initFromString(Props.PROP_MOTION_EXCESS_SPEED     	, "0.0"              , true); // kph
             }catch (Throwable th){
@@ -281,7 +489,6 @@ public class AndroDMTP implements Runnable, Props.SavePropsCallBack{
             }
 
             //	Header settings
-            String firmware = Props.getString(Props.PROP_STATE_FIRMWARE,"");
             String serial   = Props.getString(Props.PROP_STATE_SERIAL ,"");
             Log.println(LOG_NAME, "OpenDMTP protocol reference implementation.");
             Log.println(LOG_NAME, "Title  : " + AndroDMTP.getTitle());
@@ -412,7 +619,6 @@ public class AndroDMTP implements Runnable, Props.SavePropsCallBack{
     
     //	Force an event to be sent as soon as possible
     public void setPendingPing(int statusCode){
-        // TODO: should synchronize
         if (this.pendingPing == StatusCodes.STATUS_NONE) {
             this.pendingPing = statusCode;
         }
@@ -425,11 +631,10 @@ public class AndroDMTP implements Runnable, Props.SavePropsCallBack{
         	while(this.pause){};
             try{
             	//	Acquire GPS
-                boolean didAcquireGPS = false;
                 long gpsInterval = Props.getLong(Props.PROP_GPS_SAMPLE_RATE, 0, 15L);
                 if (DateTime.isTimerExpired(this.lastGPSAcquisitionTimer,gpsInterval)) {
                 	Log.info(LOG_NAME, "GPS acquisition slot");
-                    didAcquireGPS = this.gpsAcquire();
+                    this.gpsAcquire();
                     this.lastGPSAcquisitionTimer = DateTime.getTimerSec();
                 }
                 
@@ -471,7 +676,6 @@ public class AndroDMTP implements Runnable, Props.SavePropsCallBack{
     
     private boolean gpsAcquire(){
         Log.info(LOG_NAME, "Acquiring GPS fix ...");
-        long gpsAcquireTimeoutMS = Props.getLong(Props.PROP_GPS_ACQUIRE_WAIT, 0, 0L);
         
         GeoEvent gps  = new GeoEvent();
         

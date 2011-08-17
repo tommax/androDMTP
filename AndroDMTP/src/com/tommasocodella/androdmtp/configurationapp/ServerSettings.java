@@ -45,7 +45,6 @@ public class ServerSettings extends Activity {
 	class IncomingHandler extends Handler{
 		@Override
 		public void handleMessage (Message msg){
-			Toast.makeText(getApplicationContext(), "SERVER SETTING: message received" + msg.what, Toast.LENGTH_SHORT).show();
 			switch(msg.what){
 				case DISABLE_APPLY_BUTTON:
 					applyButton.setEnabled(false);
@@ -65,18 +64,11 @@ public class ServerSettings extends Activity {
 	
 	private ServiceConnection mConnection = new ServiceConnection() {
         public void onServiceConnected(ComponentName className, IBinder service) {
-            // This is called when the connection with the service has been
-            // established, giving us the object we can use to
-            // interact with the service.  We are communicating with the
-            // service using a Messenger, so here we get a client-side
-            // representation of that from the raw IBinder object.
             mService = new Messenger(service);
             mBound = true;
         }
 
         public void onServiceDisconnected(ComponentName className) {
-            // This is called when the connection with the service has been
-            // unexpectedly disconnected -- that is, its process crashed.
             mService = null;
             mBound = false;
         }
@@ -107,7 +99,6 @@ public class ServerSettings extends Activity {
 	};
 	
 	private void connectToDispatcher(){
-		Toast.makeText(getApplicationContext(), "SERVER SETTING: try to connect to dispatcher", Toast.LENGTH_SHORT).show();
 		getApplicationContext().bindService(new Intent(this, CommunicationDispatcher.class), dispatcherConnection, Context.BIND_AUTO_CREATE);
 	}
 	

@@ -2,4 +2,13 @@
 <resources>
     <string name="app_name">AndroDMTP</string>
     <string name="nodata">NO DATA</string>
+    <string name="meters">m</string>
+    <string name="seconds">s</string>
+    <string name="kmh">Km/h</string>
+    <string name="motion_type_prompt">Choose a planet</string>
+    <string-array name="motion_type_array">
+        <item>Motion Speed</item>
+        <item>Motion Position</item>
+    </string-array>
+        <string name="savesettings">   Save settings   </string>
 </resources>
