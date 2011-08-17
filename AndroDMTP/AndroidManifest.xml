@@ -19,6 +19,7 @@
         <activity android:name=".configurationapp.ServerSettings"></activity>
         <activity android:name=".configurationapp.ComunicationSettings"></activity>
         <activity android:name=".configurationapp.AndroDMTPStatus"></activity>
+        <service android:name=".configurationapp.CommunicationDispatcher"></service>
 
     </application>
 </manifest>

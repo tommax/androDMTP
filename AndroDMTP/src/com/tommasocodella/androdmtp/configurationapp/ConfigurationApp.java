@@ -10,7 +10,7 @@ import android.os.Bundle;
 import android.widget.TabHost;
 
 public class ConfigurationApp extends TabActivity {
-	Intent androDMTPService;
+	private Intent androDMTPService	= null;
 	
 	@Override
 	public void onCreate(Bundle savedInstanceState){
