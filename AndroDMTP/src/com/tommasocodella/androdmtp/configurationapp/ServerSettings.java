@@ -45,12 +45,15 @@ public class ServerSettings extends Activity {
 	class IncomingHandler extends Handler{
 		@Override
 		public void handleMessage (Message msg){
+			Toast.makeText(getApplicationContext(), "SERVER SETTING: message received" + msg.what, Toast.LENGTH_SHORT).show();
 			switch(msg.what){
 				case DISABLE_APPLY_BUTTON:
 					applyButton.setEnabled(false);
+					applyButton.setText("Please stop DMTP before edit server settings");
 					break;
 				case ENABLE_APPLY_BUTTON:
 					applyButton.setEnabled(true);
+					applyButton.setText("   Save settings   ");
 					break;
 				default:
 					super.handleMessage(msg);

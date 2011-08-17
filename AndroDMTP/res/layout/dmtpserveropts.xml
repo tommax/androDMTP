@@ -24,7 +24,7 @@
         <EditText android:layout_weight="1" android:layout_height="wrap_content" android:layout_marginLeft="15px" android:layout_width="wrap_content" android:id="@+id/serverdevice"></EditText>
     </LinearLayout>
     <RelativeLayout android:layout_width="fill_parent" android:layout_height="wrap_content" android:id="@+id/relativeLayout1" android:layout_marginTop="30px">
-        <Button android:gravity="center_vertical|center_horizontal|center" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_alignParentTop="true" android:layout_centerHorizontal="true" android:id="@+id/applyserver" android:text="SAVE"></Button>
+        <Button android:gravity="center_vertical|center_horizontal|center" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_alignParentTop="true" android:layout_centerHorizontal="true" android:id="@+id/applyserver" android:text="   Save settings   "></Button>
     </RelativeLayout>
     
 </LinearLayout>

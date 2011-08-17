@@ -55,12 +55,12 @@ public class CommunicationDispatcher extends Service{
 				case DISABLE_APPLY_BUTTON_SERVER_SETTINGS:
 					responseMessage = Message.obtain(null, ServerSettings.DISABLE_APPLY_BUTTON);
 					if(serverSettingActivity==null)
-						serverSettingNotReceived.add(new Integer(DISABLE_APPLY_BUTTON_SERVER_SETTINGS));
+						serverSettingNotReceived.add(new Integer(ServerSettings.DISABLE_APPLY_BUTTON));
 					else{
 						try {
 							serverSettingActivity.send(responseMessage);
 						} catch (RemoteException e) {
-							serverSettingNotReceived.add(new Integer(DISABLE_APPLY_BUTTON_SERVER_SETTINGS));
+							serverSettingNotReceived.add(new Integer(ServerSettings.DISABLE_APPLY_BUTTON));
 						}
 					}
 					break;
@@ -68,12 +68,12 @@ public class CommunicationDispatcher extends Service{
 				case ENABLE_APPLY_BUTTON_SERVER_SETTINGS:
 					responseMessage = Message.obtain(null, ServerSettings.ENABLE_APPLY_BUTTON);
 					if(serverSettingActivity==null)
-						serverSettingNotReceived.add(new Integer(ENABLE_APPLY_BUTTON_SERVER_SETTINGS));
+						serverSettingNotReceived.add(new Integer(ServerSettings.ENABLE_APPLY_BUTTON));
 					else{
 						try {
 							serverSettingActivity.send(responseMessage);
 						} catch (RemoteException e) {
-							serverSettingNotReceived.add(new Integer(ENABLE_APPLY_BUTTON_SERVER_SETTINGS));
+							serverSettingNotReceived.add(new Integer(ServerSettings.ENABLE_APPLY_BUTTON));
 						}
 					}
 					break;
