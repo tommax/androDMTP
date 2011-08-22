@@ -21,11 +21,15 @@ public class CommunicationDispatcher extends Service{
 	public final static int DISABLE_APPLY_BUTTON_SERVER_SETTINGS	= 10;
 	public final static int ENABLE_APPLY_BUTTON_SERVER_SETTINGS		= 11;
 	
+	public final static int DISABLE_APPLY_BUTTON_GPS_SETTINGS		= 20;
+	public final static int ENABLE_APPLY_BUTTON_GPS_SETTINGS		= 21;
+	
 	private Messenger serverSettingActivity 				= null;
 	private ArrayList<Integer> serverSettingNotReceived		= new ArrayList<Integer>();
 	
 	private Messenger statusActivity 						= null;
 	private Messenger gpsActivity	 						= null;
+	private ArrayList<Integer> gpsSettingNotReceived		= new ArrayList<Integer>();
 	
 	final Messenger mMessenger = new Messenger(new IncomingMessageHandler());
 	
@@ -56,6 +60,14 @@ public class CommunicationDispatcher extends Service{
 				case ACTIVITY_GPS_SETTING_REGISTRATION:
 					gpsActivity = msg.replyTo;
 					Toast.makeText(getApplicationContext(), "GPS SETTING REGISTERED", Toast.LENGTH_SHORT).show();
+					while(gpsSettingNotReceived.size() > 0){
+						try {
+							Message lostMessage = Message.obtain(null, gpsSettingNotReceived.remove(0).intValue());
+							gpsActivity.send(lostMessage);
+						} catch (RemoteException e) {
+							e.printStackTrace();
+						}
+					}
 					break;
 				
 				case DISABLE_APPLY_BUTTON_SERVER_SETTINGS:
@@ -80,6 +92,32 @@ public class CommunicationDispatcher extends Service{
 							serverSettingActivity.send(responseMessage);
 						} catch (RemoteException e) {
 							serverSettingNotReceived.add(new Integer(ServerSettings.ENABLE_APPLY_BUTTON));
+						}
+					}
+					break;
+					
+				case DISABLE_APPLY_BUTTON_GPS_SETTINGS:
+					responseMessage = Message.obtain(null, GPSSettings.DISABLE_APPLY_BUTTON);
+					if(gpsActivity==null)
+						gpsSettingNotReceived.add(new Integer(GPSSettings.DISABLE_APPLY_BUTTON));
+					else{
+						try {
+							gpsActivity.send(responseMessage);
+						} catch (RemoteException e) {
+							gpsSettingNotReceived.add(new Integer(GPSSettings.DISABLE_APPLY_BUTTON));
+						}
+					}
+					break;
+				
+				case ENABLE_APPLY_BUTTON_GPS_SETTINGS:
+					responseMessage = Message.obtain(null, GPSSettings.ENABLE_APPLY_BUTTON);
+					if(gpsActivity==null)
+						gpsSettingNotReceived.add(new Integer(GPSSettings.ENABLE_APPLY_BUTTON));
+					else{
+						try {
+							gpsActivity.send(responseMessage);
+						} catch (RemoteException e) {
+							gpsSettingNotReceived.add(new Integer(GPSSettings.ENABLE_APPLY_BUTTON));
 						}
 					}
 					break;

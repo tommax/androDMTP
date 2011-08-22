@@ -165,11 +165,7 @@ public class AndroDMTPMainService extends Service {
         
         androDMTPPersistentStorage = new PersistentStorage(getApplicationContext());		
 	}
-	
-	@Override
-	public void onDestroy(){
-		stopSelf();
-	}
+
 	  
 	public int onStartCommand(Intent intent, int flags, int startId) {
 		Toast.makeText(this, "service starting", Toast.LENGTH_SHORT).show();

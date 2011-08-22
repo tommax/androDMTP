@@ -30,6 +30,9 @@ import android.widget.Toast;
 
 public class GPSSettings extends Activity {
 	
+	public static final int DISABLE_APPLY_BUTTON 	= 1;
+	public static final int ENABLE_APPLY_BUTTON 	= 2;
+	
 	protected Messenger mService 			= null;
 	protected boolean mBound 				= false;
 	
@@ -56,6 +59,14 @@ public class GPSSettings extends Activity {
 		@Override
 		public void handleMessage (Message msg){
 			switch(msg.what){
+				case DISABLE_APPLY_BUTTON:
+					applyButton.setEnabled(false);
+					applyButton.setText("Please stop DMTP before edit gps settings");
+					break;
+				case ENABLE_APPLY_BUTTON:
+					applyButton.setEnabled(true);
+					applyButton.setText("   Save settings   ");
+					break;
 				default:
 					super.handleMessage(msg);
 					break;
@@ -144,6 +155,7 @@ public class GPSSettings extends Activity {
 		}
 		
 		stopManagingCursor(c);
+		c.close();
 		
 		c = androDMTPParams.query(PersistentStorage.PARAMS_TABLE, new String[]{"value"}, "paramID = " + AndroDMTPMainService.MSG_SET_GPSACCURACY, null, null, null, null);		
 		startManagingCursor(c);
@@ -157,6 +169,7 @@ public class GPSSettings extends Activity {
 		}
 		
 		stopManagingCursor(c);
+		c.close();
 		
 		c = androDMTPParams.query(PersistentStorage.PARAMS_TABLE, new String[]{"value"}, "paramID = " + AndroDMTPMainService.MSG_SET_GPSMINSPEED, null, null, null, null);
 		startManagingCursor(c);
@@ -170,6 +183,7 @@ public class GPSSettings extends Activity {
 		}
 		
 		stopManagingCursor(c);
+		c.close();
 		
 		c = androDMTPParams.query(PersistentStorage.PARAMS_TABLE, new String[]{"value"}, "paramID = " + AndroDMTPMainService.MSG_SET_GPSMOTIONSTARTKPH, null, null, null, null);
 		startManagingCursor(c);
@@ -183,6 +197,7 @@ public class GPSSettings extends Activity {
 		}
 		
 		stopManagingCursor(c);
+		c.close();
 		
 		c = androDMTPParams.query(PersistentStorage.PARAMS_TABLE, new String[]{"value"}, "paramID = " + AndroDMTPMainService.MSG_SET_GPSMOTIONSTARTMETER, null, null, null, null);
 		startManagingCursor(c);
@@ -196,6 +211,7 @@ public class GPSSettings extends Activity {
 		}
 		
 		stopManagingCursor(c);
+		c.close();
 		
 		c = androDMTPParams.query(PersistentStorage.PARAMS_TABLE, new String[]{"value"}, "paramID = " + AndroDMTPMainService.MSG_SET_GPSMOTIONINMOTION, null, null, null, null);
 		startManagingCursor(c);
@@ -209,6 +225,7 @@ public class GPSSettings extends Activity {
 		}
 		
 		stopManagingCursor(c);
+		c.close();
 		
 		c = androDMTPParams.query(PersistentStorage.PARAMS_TABLE, new String[]{"value"}, "paramID = " + AndroDMTPMainService.MSG_SET_GPSMOTIONSTOP, null, null, null, null);
 		startManagingCursor(c);
@@ -222,6 +239,7 @@ public class GPSSettings extends Activity {
 		}
 		
 		stopManagingCursor(c);
+		c.close();
 		
 		c = androDMTPParams.query(PersistentStorage.PARAMS_TABLE, new String[]{"value"}, "paramID = " + AndroDMTPMainService.MSG_SET_GPSMOTIONDORMANT, null, null, null, null);
 		startManagingCursor(c);
@@ -235,6 +253,8 @@ public class GPSSettings extends Activity {
 		}
 		
 		stopManagingCursor(c);
+		c.close();
+		
 		
 		c = androDMTPParams.query(PersistentStorage.PARAMS_TABLE, new String[]{"value"}, "paramID = " + AndroDMTPMainService.MSG_SET_GPSMOTIONSTARTTYPE, null, null, null, null);
 		startManagingCursor(c);
@@ -253,6 +273,7 @@ public class GPSSettings extends Activity {
 		
 		stopManagingCursor(c);
 		
+		c.close();
 		
 		connectToDispatcher();
 	}

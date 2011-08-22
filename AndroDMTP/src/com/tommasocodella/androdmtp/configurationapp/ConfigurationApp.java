@@ -41,9 +41,11 @@ public class ConfigurationApp extends TabActivity {
 		spec = tabHost.newTabSpec("server").setIndicator("SERVER", res.getDrawable(R.drawable.ic_tab_server)).setContent(intent);
 		tabHost.addTab(spec);
 
-		intent = new Intent().setClass(this, ComunicationSettings.class);
+		/*intent = new Intent().setClass(this, ComunicationSettings.class);
 		spec = tabHost.newTabSpec("communication").setIndicator("COM", res.getDrawable(R.drawable.ic_tab_com)).setContent(intent);
-		tabHost.addTab(spec);
+		tabHost.addTab(spec);*/
+		
+		
 		
 		tabHost.setCurrentTab(0);
 		
@@ -53,7 +55,9 @@ public class ConfigurationApp extends TabActivity {
 	
 	@Override
     protected void onStop() {
-        super.onStop();
+		
+        stopService(androDMTPService);
         finish();
+        super.onStop();
     }
 }

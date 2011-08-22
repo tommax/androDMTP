@@ -141,6 +141,7 @@ public class ServerSettings extends Activity {
 		}
 		
 		stopManagingCursor(c);
+		c.close();
 		
 		c = androDMTPParams.query(PersistentStorage.PARAMS_TABLE, new String[]{"value"}, "paramID = " + AndroDMTPMainService.MSG_SET_SRVPORT, null, null, null, null);
 		startManagingCursor(c);
@@ -154,7 +155,7 @@ public class ServerSettings extends Activity {
 		}
 		
 		stopManagingCursor(c);
-		
+		c.close();
 		
 		c = androDMTPParams.query(PersistentStorage.PARAMS_TABLE, new String[]{"value"}, "paramID = " + AndroDMTPMainService.MSG_SET_SRVACCOUNT, null, null, null, null);
 		startManagingCursor(c);
@@ -168,7 +169,7 @@ public class ServerSettings extends Activity {
 		}
 		
 		stopManagingCursor(c);
-		
+		c.close();
 		
 		c = androDMTPParams.query(PersistentStorage.PARAMS_TABLE, new String[]{"value"}, "paramID = " + AndroDMTPMainService.MSG_SET_SRVDEVICE, null, null, null, null);
 		startManagingCursor(c);
@@ -182,6 +183,7 @@ public class ServerSettings extends Activity {
 		}
 		
 		stopManagingCursor(c);
+		c.close();
 		
 		connectToDispatcher();
 	}

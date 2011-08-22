@@ -172,6 +172,13 @@ public class AndroDMTPStatus extends Activity{
 					} catch (RemoteException e) {
 						e.printStackTrace();
 					}
+					
+					disableSave = Message.obtain(null, CommunicationDispatcher.DISABLE_APPLY_BUTTON_GPS_SETTINGS);
+					try {
+						dispatcherService.send(disableSave);
+					} catch (RemoteException e) {
+						e.printStackTrace();
+					}
 				}
 
 				statusImageGreen.setVisibility(ImageView.VISIBLE);
@@ -190,6 +197,13 @@ public class AndroDMTPStatus extends Activity{
 				
 				if(dispatcherBound){
 					Message disableSave = Message.obtain(null, CommunicationDispatcher.ENABLE_APPLY_BUTTON_SERVER_SETTINGS);
+					try {
+						dispatcherService.send(disableSave);
+					} catch (RemoteException e) {
+						e.printStackTrace();
+					}
+					
+					disableSave = Message.obtain(null, CommunicationDispatcher.ENABLE_APPLY_BUTTON_GPS_SETTINGS);
 					try {
 						dispatcherService.send(disableSave);
 					} catch (RemoteException e) {
@@ -243,12 +257,4 @@ public class AndroDMTPStatus extends Activity{
 		}
 	}
 	
-	@Override
-    protected void onStop() {
-        super.onStop();
-        if (mBound) {
-            unbindService(mConnection);
-            mBound = false;
-        }
-    }
 }

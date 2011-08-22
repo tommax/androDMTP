@@ -31,7 +31,7 @@ public class AndroDMTP implements Runnable, Props.SavePropsCallBack{
     private static final String UNIQUE_ID			= "";
     private static final String LOG_NAME			= "MAIN";
     public  static final String COPYRIGHT			= "Copyright 2011 Tommaso Codella - 2007-2009, GeoTelematic Solutions, Inc.";    
-    public  static final String RELEASE_VERSION		= "0.5";
+    public  static final String RELEASE_VERSION		= "1.0";
     private static final String DMTP_NAME			= "AndroDMTP";
     private static final String DMTP_TYPE			= "Android";
     public  static final String DMTP_VERSION		= DMTP_NAME + "_" + DMTP_TYPE + "." + RELEASE_VERSION;    

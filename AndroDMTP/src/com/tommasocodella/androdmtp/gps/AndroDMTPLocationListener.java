@@ -1,5 +1,7 @@
 package com.tommasocodella.androdmtp.gps;
 
+import com.tommasocodella.androdmtp.services.AndroDMTP;
+
 import android.location.Location;
 import android.location.LocationListener;
 import android.os.Bundle;
@@ -11,13 +13,11 @@ public class AndroDMTPLocationListener implements LocationListener {
 	private boolean isNewLocation;
 	private Location currentBestLocation;
 
-
 	public AndroDMTPLocationListener(){
 		super();
 		currentBestLocation = null;
 		isNewLocation = true;
 	}
-
 
 
 	public void onLocationChanged(Location location) {
