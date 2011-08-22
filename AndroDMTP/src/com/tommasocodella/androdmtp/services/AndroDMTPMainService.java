@@ -39,6 +39,9 @@ public class AndroDMTPMainService extends Service {
 	public static final int MSG_SET_GPSMOTIONDORMANT	= 28;
 	
 	
+	
+	private PersistentStorage androDMTPPersistentStorage	= null;
+	
 	private AndroDMTP dmtp = null;
 	private LocationListener locationListener;
 	final Messenger mMessenger = new Messenger(new IncomingHandler());
@@ -73,49 +76,64 @@ public class AndroDMTPMainService extends Service {
 					
 				case MSG_SET_SRVADDR:
 					dmtp.setServerAddr((String) msg.obj);
+					androDMTPPersistentStorage.getWritableDatabase().execSQL("INSERT or REPLACE into params(paramID, param, value) VALUES (" + MSG_SET_SRVADDR + ", 'SERVERADDRESS', '" + (String) msg.obj + "')");
 					break;
 				case MSG_SET_SRVPORT:
 					dmtp.setServerPort((String) msg.obj);
+					androDMTPPersistentStorage.getWritableDatabase().execSQL("INSERT or REPLACE into params(paramID, param, value) VALUES (" + MSG_SET_SRVPORT + ", 'SERVERPORT', '" + (String) msg.obj + "')");
 					break;
 				case MSG_SET_SRVDEVICE:
 					dmtp.setServerDevice((String) msg.obj);
+					androDMTPPersistentStorage.getWritableDatabase().execSQL("INSERT or REPLACE into params(paramID, param, value) VALUES (" + MSG_SET_SRVDEVICE + ", 'SERVERDEVICE', '" + (String) msg.obj + "')");
 					break;
 				case MSG_SET_SRVACCOUNT:
 					dmtp.setServerAccount((String) msg.obj);
+					androDMTPPersistentStorage.getWritableDatabase().execSQL("INSERT or REPLACE into params(paramID, param, value) VALUES (" + MSG_SET_SRVACCOUNT + ", 'SERVERACCOUNT', '" + (String) msg.obj + "')");
 					break;
 				case MSG_SET_SRVUNIQUE:
 					dmtp.setServerUnique((String) msg.obj);
+					androDMTPPersistentStorage.getWritableDatabase().execSQL("INSERT or REPLACE into params(paramID, param, value) VALUES (" + MSG_SET_SRVUNIQUE + ", 'SERVERUNIQUE', '" + (String) msg.obj + "')");
 					break;
 				case MSG_SET_SRVACCESS:
 					dmtp.setServerAccess((String) msg.obj);
+					androDMTPPersistentStorage.getWritableDatabase().execSQL("INSERT or REPLACE into params(paramID, param, value) VALUES (" + MSG_SET_SRVACCESS + ", 'SERVERACCESS', '" + (String) msg.obj + "')");
 					break;
 					
 				case MSG_SET_GPSRATE:
 					dmtp.setGpsRate((String) msg.obj);
+					androDMTPPersistentStorage.getWritableDatabase().execSQL("INSERT or REPLACE into params(paramID, param, value) VALUES (" + MSG_SET_GPSRATE + ", 'GPSRATE', '" + (String) msg.obj + "')");
 					break;
 				case MSG_SET_GPSACCURACY:
 					dmtp.setGpsAccuracy((String) msg.obj);
+					androDMTPPersistentStorage.getWritableDatabase().execSQL("INSERT or REPLACE into params(paramID, param, value) VALUES (" + MSG_SET_GPSACCURACY + ", 'GPSACCURACY', '" + (String) msg.obj + "')");
 					break;
 				case MSG_SET_GPSMINSPEED:
 					dmtp.setGpsMinSpeed((String) msg.obj);
+					androDMTPPersistentStorage.getWritableDatabase().execSQL("INSERT or REPLACE into params(paramID, param, value) VALUES (" + MSG_SET_GPSMINSPEED + ", 'GPSMINSPEED', '" + (String) msg.obj + "')");
 					break;
 				case MSG_SET_GPSMOTIONSTARTTYPE:
 					dmtp.setMotionStartType(msg.arg1);
+					androDMTPPersistentStorage.getWritableDatabase().execSQL("INSERT or REPLACE into params(paramID, param, value) VALUES (" + MSG_SET_GPSMOTIONSTARTTYPE + ", 'GPSMOTIONSTARTTYPE', '" + msg.arg1 + "')");
 					break;
 				case MSG_SET_GPSMOTIONSTARTMETER:
 					dmtp.setMotionStartMeter((String) msg.obj);
+					androDMTPPersistentStorage.getWritableDatabase().execSQL("INSERT or REPLACE into params(paramID, param, value) VALUES (" + MSG_SET_GPSMOTIONSTARTMETER + ", 'GPSMOTIONSTARTMETER', '" + (String) msg.obj + "')");
 					break;
 				case MSG_SET_GPSMOTIONSTARTKPH:
 					dmtp.setMotionStartKph((String) msg.obj);
+					androDMTPPersistentStorage.getWritableDatabase().execSQL("INSERT or REPLACE into params(paramID, param, value) VALUES (" + MSG_SET_GPSMOTIONSTARTKPH + ", 'GPSMOTIONSTARTKPH', '" + (String) msg.obj + "')");
 					break;
 				case MSG_SET_GPSMOTIONINMOTION:
 					dmtp.setMotionInMotion((String) msg.obj);
+					androDMTPPersistentStorage.getWritableDatabase().execSQL("INSERT or REPLACE into params(paramID, param, value) VALUES (" + MSG_SET_GPSMOTIONINMOTION + ", 'GPSMOTIONINMOTION', '" + (String) msg.obj + "')");
 					break;
 				case MSG_SET_GPSMOTIONSTOP:
 					dmtp.setMotionStop((String) msg.obj);
+					androDMTPPersistentStorage.getWritableDatabase().execSQL("INSERT or REPLACE into params(paramID, param, value) VALUES (" + MSG_SET_GPSMOTIONSTOP + ", 'GPSMOTIONSTOP', '" + (String) msg.obj + "')");
 					break;
 				case MSG_SET_GPSMOTIONDORMANT:
 					dmtp.setMotionDormant((String) msg.obj);
+					androDMTPPersistentStorage.getWritableDatabase().execSQL("INSERT or REPLACE into params(paramID, param, value) VALUES (" + MSG_SET_GPSMOTIONDORMANT + ", 'GPSMOTIONDORMANT', '" + (String) msg.obj + "')");
 					break;
 
 
@@ -145,8 +163,7 @@ public class AndroDMTPMainService extends Service {
                
         dmtp = AndroDMTP.getInstance((AndroDMTPLocationListener) locationListener);
         
-        
-		
+        androDMTPPersistentStorage = new PersistentStorage(getApplicationContext());		
 	}
 	
 	@Override

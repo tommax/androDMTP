@@ -2,6 +2,7 @@ package com.tommasocodella.androdmtp.configurationapp;
 
 import com.tommasocodella.androdmtp.R;
 import com.tommasocodella.androdmtp.services.AndroDMTPMainService;
+import com.tommasocodella.androdmtp.services.PersistentStorage;
 
 import android.app.Activity;
 import android.app.ProgressDialog;
@@ -9,6 +10,8 @@ import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
 import android.content.ServiceConnection;
+import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.IBinder;
@@ -20,6 +23,7 @@ import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.SimpleCursorAdapter;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -40,6 +44,8 @@ public class ServerSettings extends Activity {
 	protected boolean dispatcherBound 		= false;
 	final Messenger mMessenger 				= new Messenger(new IncomingHandler());
 	protected Intent androDMTPService 		= null;
+	
+	private PersistentStorage androDMTPPersistentStorage	= null;
 	
 	
 	class IncomingHandler extends Handler{
@@ -110,23 +116,77 @@ public class ServerSettings extends Activity {
 		setContentView(R.layout.dmtpserveropts);
 		androDMTPService = new Intent(this, AndroDMTPMainService.class);
 		
+		androDMTPPersistentStorage = new PersistentStorage(getApplicationContext());
+		SQLiteDatabase androDMTPParams = androDMTPPersistentStorage.getReadableDatabase();
+		
 		serverAddr = (EditText) findViewById(R.id.serveraddr);
 		serverPort = (EditText) findViewById(R.id.serverport);
 		serverAccount = (EditText) findViewById(R.id.serveraccount);
 		serverDevice = (EditText) findViewById(R.id.serverdevice);
 		applyButton = (Button) findViewById(R.id.applyserver);
 		
-		applyButton.setOnClickListener(new applyListener());
+		applyButton.setOnClickListener(new ApplyListener());
 		
-		serverAddr.setText("192.168.1.3");
-		serverPort.setText("31000");
-		serverAccount.setText("androdmtp");
-		serverDevice.setText("nexus");
+		String columns[] = {"paramID","param"};
+		
+		Cursor c = androDMTPParams.query(PersistentStorage.PARAMS_TABLE, new String[]{"value"}, "paramID = " + AndroDMTPMainService.MSG_SET_SRVADDR, null, null, null, null);
+		startManagingCursor(c);
+		
+		if(c.moveToFirst()){
+			serverAddr.setText("" + c.getString(0));
+		}
+		
+		if(serverAddr.getText().length() <= 0){
+			serverAddr.setText("192.168.1.3");
+		}
+		
+		stopManagingCursor(c);
+		
+		c = androDMTPParams.query(PersistentStorage.PARAMS_TABLE, new String[]{"value"}, "paramID = " + AndroDMTPMainService.MSG_SET_SRVPORT, null, null, null, null);
+		startManagingCursor(c);
+		
+		if(c.moveToFirst()){
+			serverPort.setText("" + c.getString(0));
+		}
+		
+		if(serverPort.getText().length() <= 0){
+			serverPort.setText("31000");
+		}
+		
+		stopManagingCursor(c);
+		
+		
+		c = androDMTPParams.query(PersistentStorage.PARAMS_TABLE, new String[]{"value"}, "paramID = " + AndroDMTPMainService.MSG_SET_SRVACCOUNT, null, null, null, null);
+		startManagingCursor(c);
+		
+		if(c.moveToFirst()){
+			serverAccount.setText("" + c.getString(0));
+		}
+		
+		if(serverAccount.getText().length() <= 0){
+			serverAccount.setText("unknown");
+		}
+		
+		stopManagingCursor(c);
+		
+		
+		c = androDMTPParams.query(PersistentStorage.PARAMS_TABLE, new String[]{"value"}, "paramID = " + AndroDMTPMainService.MSG_SET_SRVDEVICE, null, null, null, null);
+		startManagingCursor(c);
+		
+		if(c.moveToFirst()){
+			serverDevice.setText("" + c.getString(0));
+		}
+		
+		if(serverDevice.getText().length() <= 0){
+			serverDevice.setText("unknown device");
+		}
+		
+		stopManagingCursor(c);
 		
 		connectToDispatcher();
 	}
 	
-	private class applyListener implements OnClickListener{
+	private class ApplyListener implements OnClickListener{
 		Message msg = null;
 		
 		@Override
